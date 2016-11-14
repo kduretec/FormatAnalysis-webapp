@@ -82,10 +82,11 @@ shinyServer(function(input, output) {
   output$mainPlot <- renderPlot( {
     tmpModels <- dfModels[dfModels$ID %in% input$selectedElements,]
     tmpPoints <- dfPoints[dfPoints$ID %in% input$selectedElements,]
-    
+    xLabl = "age"
     if (input$xAxis==2) {
       tmpModels$interval <- tmpModels$interval + tmpModels$releaseYear
       tmpPoints$ages <- tmpPoints$ages + tmpPoints$releaseYear
+      xLabl = "year"
     }
     yMax <- 1.1*max(c(tmpModels$model, tmpPoints$aRate, tmpPoints$sARate))
     mPlot <- ggplot()
@@ -109,9 +110,12 @@ shinyServer(function(input, output) {
     }
       mPlot <- mPlot + 
       scale_x_continuous(expand = c(0,0)) +
-      scale_y_continuous(expand = c(0,0)) +
+      #scale_y_continuous(expand = c(0,0)) +
       #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
-      theme(legend.position="bottom")
+      labs(x=xLabl, y="adoption rate")  +
+      theme(legend.position="bottom",
+            legend.title = element_blank(),
+            legend.key = element_blank())
     return (mPlot)
   }
   )
