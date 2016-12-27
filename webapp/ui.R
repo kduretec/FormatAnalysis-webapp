@@ -1,16 +1,26 @@
 library(shiny)
+library(shinyjs)
+library(shinyBS)
 library(plotly)
 library(shinydashboard)
 
 # Define UI for application that draws a histogram
 
+label.help <- function(label,id){
+  HTML(paste0(label,actionLink(id,label=NULL,icon=icon('question-circle'))))
+}
+
+
 dashboardPage(
   dashboardHeader(title = "Format Analysis"),
   dashboardSidebar(
-    menuItem("Dataset", tabName = "dataset"),
-    menuItem("Format Markets", tabName = "markets"),
-    menuItem("Models", tabName = "models"),
-    menuItem("Parameters", tabName = "parameters")
+    sidebarMenu(
+      id="tabs",
+      menuItem("Dataset", tabName = "dataset", icon = icon("cog")),
+      menuItem("Format Markets", tabName = "markets", icon = icon("cog")),
+      menuItem("Models", tabName = "models", icon = icon("cog")),
+      menuItem("Parameters", tabName = "parameters", icon = icon("cog"))  
+    )
   ),
   dashboardBody(
     tabItems(
@@ -24,48 +34,62 @@ dashboardPage(
       ),
       tabItem(
         tabName = "models",
-        column(
-          width=3, 
-          box(
-            width=12,
-            title = "Settings", 
-            fluidRow(
-              column (
-                4,
-                h4("Points"),
-                checkboxInput("adptRt", label = "Adoption Rate", value = TRUE),
-                checkboxInput("smthRt", label = "Smoothed Adoption Rate", value = FALSE)
+        fluidRow(
+          column(
+            width = 3,
+            box(
+              width = 12,
+              title = "Plot Settings",
+              h4("Points"),
+              fluidRow(
+                column (
+                  width = 6,
+                  checkboxInput("adptRt", label = "Real", value = TRUE)
+                ),
+                column(
+                  width = 6,
+                  checkboxInput("smthRt", label = "Smoothed", value = FALSE)
+                )
               ),
-              column (
-                4,
-                h4("Bands"),
-                checkboxInput("confBand", label = "Confidence Band", value = FALSE),
-                checkboxInput("predBand", label = "Prediction Band", value = FALSE)
+              h4("Bands"),
+              fluidRow(
+                column (
+                  width = 6,
+                  checkboxInput("confBand", label = "Confidence", value = FALSE)
+                ),
+                column(
+                  width = 6,
+                  checkboxInput("predBand", label = "Prediction", value = FALSE)
+                )
               ),
-              column(
-                4,
-                radioButtons(
-                  "xAxis",
-                  label = "X axis",
-                  choices = list("Ages" = 1, "Years" = 2),
-                  selected = 1
+              radioButtons("xAxis", label = "X axis"%>%label.help("lbl_xaxis"), choices = list("Ages" = 1, "Years" = 2), 
+                           selected = 1, inline=TRUE),
+              bsTooltip(id = "lbl_xaxis", title = "Which axis to use", 
+                        placement = "right", trigger = "hover")
+            ),
+            box(
+              width = 12,
+              height = 500,
+              fluidRow(
+                column(
+                  12,
+                  uiOutput("chooseMarket"),
+                  uiOutput("chooseElement")
                 )
               )
             )
           ),
           box(
-            width=12,
-            fluidRow(column(
-              12,
-              uiOutput("chooseMarket"),
-              uiOutput("chooseElement")
-            ))
-          ) 
-        ),
-        box(
-          width=9, 
-          plotOutput("mainPlot")
+            width = 9,
+            height = 700,
+            plotOutput("mainPlot")
+          )
         )
+      ),
+      tabItem(
+        tabName = "parameters",
+        h2("Model Paramaters")
       )
-  ))
+    )
+  )
 )
