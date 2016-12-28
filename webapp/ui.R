@@ -3,6 +3,7 @@ library(shinyjs)
 library(shinyBS)
 library(plotly)
 library(shinydashboard)
+library(DT)
 
 # Define UI for application that draws a histogram
 
@@ -16,6 +17,7 @@ dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       id="tabs",
+      menuItem("About", tabName = "about", icon = icon("cog")),
       menuItem("Dataset", tabName = "dataset", icon = icon("cog")),
       menuItem("Format Markets", tabName = "markets", icon = icon("cog")),
       menuItem("Models", tabName = "models", icon = icon("cog")),
@@ -24,6 +26,10 @@ dashboardPage(
   ),
   dashboardBody(
     tabItems(
+      tabItem(
+        tabName = "about",
+        h2("About")
+      ),
       tabItem(
         tabName = "dataset",
         h2("Dataset")
@@ -69,7 +75,6 @@ dashboardPage(
             ),
             box(
               width = 12,
-              height = 500,
               fluidRow(
                 column(
                   12,
@@ -79,10 +84,17 @@ dashboardPage(
               )
             )
           ),
-          box(
+          tabBox(
             width = 9,
-            height = 700,
-            plotOutput("mainPlot")
+            tabPanel(
+              title="Graphs",
+              plotOutput("mainPlot")
+            ),
+            tabPanel(
+              title="Models",
+              DT::dataTableOutput('mainTable')
+            )
+            
           )
         )
       ),

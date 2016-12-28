@@ -69,9 +69,11 @@ shinyServer(function(input, output) {
     }
     elements <- as.list(formatData[formatData$market==input$selectedMarket,]$ID)
     names(elements) <- formatData[formatData$market==input$selectedMarket,]$name
-    checkboxGroupInput("selectedElements", "Choose Elements", 
-                       choices = elements
-    )
+    # checkboxGroupInput("selectedElements", "Choose Elements", 
+    #                    choices = elements
+    # )
+    selectInput("selectedElements", "Choose Elements", as.list(elements), multiple=TRUE,
+                selectize = TRUE)
      
   })
   
@@ -79,6 +81,18 @@ shinyServer(function(input, output) {
     paste("Market elements to plot are", input$selectedElements)
   })
   
+  
+  output$mainTable <- DT::renderDataTable(
+    {
+      tmpModelsTab <- formatData[formatData$ID %in% input$selectedElements,]
+      tmpModelsTab[,names(tmpModelsTab) %in% c("ID", "name", "release.year", "p", "q", "m", "qualityFit")]
+    },
+    options = list(lengthChange = FALSE, dom="tp")
+  )
+
+  #####################
+  ### MAIN PLOT   #####
+  #####################
   output$mainPlot <- renderPlot( {
     tmpModels <- dfModels[dfModels$ID %in% input$selectedElements,]
     tmpPoints <- dfPoints[dfPoints$ID %in% input$selectedElements,]
@@ -90,32 +104,36 @@ shinyServer(function(input, output) {
     }
     yMax <- 1.1*max(c(tmpModels$model, tmpPoints$aRate, tmpPoints$sARate))
     mPlot <- ggplot()
-    
-    if (input$predBand==TRUE) {
-      mPlot <- mPlot + geom_ribbon(data=tmpModels, aes(x=interval, ymin=lowerPrediction, ymax=upperPrediction, fill=title), 
+    if (nrow(tmpModels)>0) { 
+      if (input$predBand==TRUE) {
+        mPlot <- mPlot + geom_ribbon(data=tmpModels, aes(x=interval, ymin=lowerPrediction, ymax=upperPrediction, fill=title), 
                                    alpha=0.15)
-    }
+      }
     
-    if (input$confBand==TRUE) {
-      mPlot <- mPlot + geom_ribbon(data=tmpModels, aes(x=interval, ymin=lower, ymax=upper, fill=title), 
-      alpha=0.25)
+      if (input$confBand==TRUE) {
+        mPlot <- mPlot + geom_ribbon(data=tmpModels, aes(x=interval, ymin=lower, ymax=upper, fill=title), 
+        alpha=0.25)
+      }
+      mPlot <-  mPlot + geom_line(data=tmpModels, aes(x=interval, y=model, color=title)) 
+      
+      if (input$adptRt==TRUE) {
+        mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=aRate, color=title), shape=19, size=2)
+      }
+      if (input$smthRt==TRUE) {
+        mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=sARate, color=title), shape=17, size=2)
+      }
+        mPlot <- mPlot + 
+          scale_x_continuous(expand = c(0,0)) +
+          #scale_y_continuous(expand = c(0,0)) +
+          #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
+          labs(x=xLabl, y="adoption rate")  +
+          theme_bw() + 
+          theme(legend.position="bottom",
+              legend.title=element_blank(),
+              legend.key=element_blank(),
+              legend.text=element_text(size=12)) +
+          guides(fill=guide_legend(nrow=2, ncol=3, byrow=TRUE))
     }
-    mPlot <-  mPlot + geom_line(data=tmpModels, aes(x=interval, y=model, color=title)) 
-    
-    if (input$adptRt==TRUE) {
-      mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=aRate, color=title), shape=19)
-    }
-    if (input$smthRt==TRUE) {
-      mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=sARate, color=title), shape=17)
-    }
-      mPlot <- mPlot + 
-      scale_x_continuous(expand = c(0,0)) +
-      #scale_y_continuous(expand = c(0,0)) +
-      #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
-      labs(x=xLabl, y="adoption rate")  +
-      theme(legend.position="bottom",
-            legend.title = element_blank(),
-            legend.key = element_blank())
     return (mPlot)
   }
   )
