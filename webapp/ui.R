@@ -70,6 +70,8 @@ dashboardPage(
               ),
               radioButtons("xAxis", label = "X axis"%>%label.help("lbl_xaxis"), choices = list("Ages" = 1, "Years" = 2), 
                            selected = 1, inline=TRUE),
+              checkboxInput("enableSlider", label="Custom X axis", value=TRUE),
+              uiOutput("xSlider"),
               bsTooltip(id = "lbl_xaxis", title = "Which axis to use", 
                         placement = "right", trigger = "hover")
             ),

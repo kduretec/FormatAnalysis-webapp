@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyjs)
 library(ggplot2)
 library(plotly)
 # Define server logic required to draw a histogram
@@ -59,6 +60,27 @@ markets <- unique(formatData$market)
 
 shinyServer(function(input, output) {
   
+
+  output$xSlider <- renderUI(
+    {
+      mx <-0 
+      mxx <- 30 
+      xs <- 0
+      xe <- 30
+      if (input$xAxis==2) {
+        mx <- 1970
+        mxx <- 2040
+        xs <- 1980
+        xe <- 2030
+      }
+      sliderInput(
+        "slider", label = "", min = mx, 
+                  max = mxx, value = c(xs, xe)
+        )
+    }
+  )
+
+  
   output$chooseMarket <- renderUI({
     selectInput("selectedMarket", "Choose market", as.list(markets))
   })
@@ -82,6 +104,9 @@ shinyServer(function(input, output) {
   })
   
   
+  ####################
+  ### MAIN TABLE #####
+  ####################
   output$mainTable <- DT::renderDataTable(
     {
       tmpModelsTab <- formatData[formatData$ID %in% input$selectedElements,]
@@ -123,7 +148,7 @@ shinyServer(function(input, output) {
         mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=sARate, color=title), shape=17, size=2)
       }
         mPlot <- mPlot + 
-          scale_x_continuous(expand = c(0,0)) +
+          scale_x_continuous(expand = c(0,0), limits = c(input$slider[1], input$slider[2])) +
           #scale_y_continuous(expand = c(0,0)) +
           #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
           labs(x=xLabl, y="adoption rate")  +
