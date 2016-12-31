@@ -6,6 +6,7 @@ library(plotly)
 
 formatData <- readRDS("data/AllExperimentsCombined.rds")
 
+experimentData <- read.table("data/allExperiments.tsv", header = TRUE, sep = "\t")
 dfPoints <- data.frame()
 dfModels <- data.frame()
 for (i in 1:nrow(formatData)) {
@@ -54,13 +55,10 @@ for (i in 1:nrow(formatData)) {
 }
 
 
-
-
 markets <- unique(formatData$market)
 
 shinyServer(function(input, output) {
   
-
   output$xSlider <- renderUI(
     {
       mx <-0 
@@ -79,7 +77,6 @@ shinyServer(function(input, output) {
         )
     }
   )
-
   
   output$chooseMarket <- renderUI({
     selectInput("selectedMarket", "Choose market", as.list(markets))
@@ -103,7 +100,6 @@ shinyServer(function(input, output) {
     paste("Market elements to plot are", input$selectedElements)
   })
   
-  
   ####################
   ### MAIN TABLE #####
   ####################
@@ -115,9 +111,9 @@ shinyServer(function(input, output) {
     options = list(lengthChange = FALSE, dom="tp")
   )
 
-  #####################
-  ### MAIN PLOT   #####
-  #####################
+  ####################
+  ### MAIN PLOT  #####
+  ####################
   output$mainPlot <- renderPlot( {
     tmpModels <- dfModels[dfModels$ID %in% input$selectedElements,]
     tmpPoints <- dfPoints[dfPoints$ID %in% input$selectedElements,]
@@ -147,20 +143,59 @@ shinyServer(function(input, output) {
       if (input$smthRt==TRUE) {
         mPlot <- mPlot + geom_point(data=tmpPoints, aes(x=ages, y=sARate, color=title), shape=17, size=2)
       }
-        mPlot <- mPlot + 
-          scale_x_continuous(expand = c(0,0), limits = c(input$slider[1], input$slider[2])) +
-          #scale_y_continuous(expand = c(0,0)) +
-          #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
-          labs(x=xLabl, y="adoption rate")  +
-          theme_bw() + 
-          theme(legend.position="bottom",
-              legend.title=element_blank(),
-              legend.key=element_blank(),
-              legend.text=element_text(size=12)) +
-          guides(fill=guide_legend(nrow=2, ncol=3, byrow=TRUE))
+       
     }
+    mPlot <- mPlot + 
+      scale_x_continuous(expand = c(0,0), limits = c(input$slider[1], input$slider[2])) +
+      #scale_y_continuous(expand = c(0,0)) +
+      #scale_y_continuous(limits = c(0,yMax), expand = c(0,0)) + 
+      labs(x=xLabl, y="adoption rate")  +
+      theme_bw() + 
+      theme(legend.position="bottom",
+            legend.title=element_blank(),
+            legend.key=element_blank(),
+            legend.text=element_text(size=12)) +
+      guides(fill=guide_legend(nrow=2, ncol=3, byrow=TRUE))
+    
     return (mPlot)
   }
+  )
+  
+  ####################
+  #### PQ PLOT #######
+  ####################
+  output$pqPlot <- renderPlot( {
+    
+    pqPlot <- ggplot()
+    pqPlot <- pqPlot + geom_point(data=experimentData, aes(x=q, y=p, color=type), size=2) +
+      theme_bw() +
+      theme(legend.position="bottom",
+            legend.title=element_blank(),
+            legend.key=element_blank(),
+            legend.text=element_text(size=12))
+    
+    return (pqPlot)
+  }
+    
+  )
+  
+  ####################
+  #### TTP PLOT  #####
+  ####################
+  
+  output$ttpPlot <- renderPlot( {
+  
+    ttpPlot <- ggplot()
+    ttpPlot <- ttpPlot + geom_point(data=experimentData, aes(x=release.year, y=TTP, color=type, size=peak)) +
+      theme_bw() +
+      theme(legend.position="bottom",
+            legend.title=element_blank(),
+            legend.key=element_blank(),
+            legend.text=element_text(size=12))
+    
+    return (ttpPlot)
+  }
+    
   )
   
   

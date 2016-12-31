@@ -20,19 +20,28 @@ dashboardPage(
       menuItem("About", tabName = "about", icon = icon("cog")),
       menuItem("Dataset", tabName = "dataset", icon = icon("cog")),
       menuItem("Format Markets", tabName = "markets", icon = icon("cog")),
-      menuItem("Models", tabName = "models", icon = icon("cog")),
-      menuItem("Parameters", tabName = "parameters", icon = icon("cog"))  
+      menuItem("Model Analysis", tabName = "models", icon = icon("cog")),
+      menuItem("Parameters Analysis", tabName = "parameters", icon = icon("cog"))  
     )
   ),
   dashboardBody(
     tabItems(
       tabItem(
         tabName = "about",
-        h2("About")
+        box (
+          width=12,
+          h3("Format Analysis"),
+          p("This is the demonstration of applying Bass Difusion model to file formats")  
+        )
+        
       ),
       tabItem(
         tabName = "dataset",
-        h2("Dataset")
+        box (
+          width=12,
+          h3("UK Web Archive Format Profile dataset"),
+          p("The used dataset is UK web archive format profile dataset")  
+        )
       ),
       tabItem(
         tabName = "markets",
@@ -102,7 +111,24 @@ dashboardPage(
       ),
       tabItem(
         tabName = "parameters",
-        h2("Model Paramaters")
+        fluidRow( 
+          box(
+            width=3,
+            title="Plot Settings"
+          ),
+          tabBox(
+            width = 9,
+            tabPanel(
+              title="p/q",
+              plotOutput("pqPlot")
+            ),
+            tabPanel(
+              title="time to peak",
+              plotOutput("ttpPlot")
+            )
+            
+          )
+        )
       )
     )
   )
