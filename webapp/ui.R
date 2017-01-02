@@ -124,7 +124,17 @@ dashboardPage(
         fluidRow( 
           box(
             width=3,
-            title="Plot Settings"
+            title="Plot Settings", 
+            fluidRow( 
+              column( 
+                width=6, 
+                uiOutput("qualityFit")
+              ),
+              column(
+                width=6,
+                uiOutput("type")
+              )
+            )
           ),
           tabBox(
             width = 9,

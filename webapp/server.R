@@ -7,6 +7,8 @@ library(plotly)
 formatData <- readRDS("data/allExperimentsCombined.rds")
 
 experimentData <- read.table("data/allExperiments.tsv", header=TRUE, sep="\t")
+qualityFit <- unique(experimentData$qualityFit)
+type <- unique(experimentData$type)
 marketFiles <- read.table("data/markets.tsv", header=TRUE, sep="\t")
 
 dfPoints <- data.frame()
@@ -190,13 +192,34 @@ shinyServer(function(input, output) {
   }
   )
   
+  
+  
+  ####################
+  ## PARAMETERS SEC. #
+  ####################
+  output$qualityFit <- renderUI (
+    {
+      checkboxGroupInput("selectedQuality", "Quality Fit", choices = qualityFit, 
+                         selected = qualityFit)
+    }
+  )
+  output$type <- renderUI (
+    {
+      checkboxGroupInput("selectedType", "Type", choices = type,
+                         selected = type)
+    }
+  )
+  
+  
+  
   ####################
   #### PQ PLOT #######
   ####################
   output$pqPlot <- renderPlot( {
     
     pqPlot <- ggplot()
-    pqPlot <- pqPlot + geom_point(data=experimentData, aes(x=q, y=p, color=type), size=2) +
+    pqPlot <- pqPlot + geom_point(data=experimentData[experimentData$type %in% input$selectedType & experimentData$qualityFit %in% input$selectedQuality,], 
+                                  aes(x=q, y=p, color=type), size=2) +
       theme_bw() +
       theme(legend.position="bottom",
             legend.title=element_blank(),
@@ -214,7 +237,9 @@ shinyServer(function(input, output) {
   output$ttpPlot <- renderPlot( {
   
     ttpPlot <- ggplot()
-    ttpPlot <- ttpPlot + geom_point(data=experimentData, aes(x=release.year, y=TTP, color=type, size=peak)) +
+    ttpPlot <- ttpPlot + geom_point(data=experimentData[experimentData$TTP>0 & experimentData$type %in% input$selectedType & 
+                                                          experimentData$qualityFit %in% input$selectedQuality,], 
+                                    aes(x=release.year, y=TTP, color=type, size=peak)) +
       theme_bw() +
       theme(legend.position="bottom",
             legend.title=element_blank(),
