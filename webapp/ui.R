@@ -31,7 +31,9 @@ dashboardPage(
         box (
           width=12,
           h3("Format Analysis"),
-          p("This is the demonstration of applying Bass Difusion model to file formats")  
+          p("This is the demonstration of applying Bass Difusion model to file formats lifecycles"),
+          h4("Authors"),
+          h4("How to cite us")
         )
         
       ),
@@ -40,12 +42,20 @@ dashboardPage(
         box (
           width=12,
           h3("UK Web Archive Format Profile dataset"),
-          p("The used dataset is UK web archive format profile dataset")  
+          HTML("<p>Currently used dataset is the <a href=\"https://www.webarchive.org.uk/ukwa/visualisation/ukwa.ds.2/fmt\">UK Web Archive Format Profile dataset</a>
+               </p>"),
+          div(img(src="ukwa.png", width=600), style="text-align: center;")
         )
       ),
       tabItem(
         tabName = "markets",
-        h2("Format Markets")
+        box (
+          width=12,
+          h3("Format Markets"),
+          uiOutput("chooseMarketTable"),
+          DT::dataTableOutput("marketTable")
+            
+        )
       ),
       tabItem(
         tabName = "models",

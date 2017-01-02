@@ -4,9 +4,11 @@ library(ggplot2)
 library(plotly)
 # Define server logic required to draw a histogram
 
-formatData <- readRDS("data/AllExperimentsCombined.rds")
+formatData <- readRDS("data/allExperimentsCombined.rds")
 
-experimentData <- read.table("data/allExperiments.tsv", header = TRUE, sep = "\t")
+experimentData <- read.table("data/allExperiments.tsv", header=TRUE, sep="\t")
+marketFiles <- read.table("data/markets.tsv", header=TRUE, sep="\t")
+
 dfPoints <- data.frame()
 dfModels <- data.frame()
 for (i in 1:nrow(formatData)) {
@@ -58,6 +60,33 @@ for (i in 1:nrow(formatData)) {
 markets <- unique(formatData$market)
 
 shinyServer(function(input, output) {
+  
+  
+  ####################
+  ### FORMAT MARKETS #
+  ####################
+  output$chooseMarketTable <- renderUI(
+    {
+      selectInput("selectedMarketTable", "Choose market", as.list(marketFiles$market))
+    }
+  )
+  output$marketTable <- DT::renderDataTable( 
+    {
+      file <- marketFiles[marketFiles$market==input$selectedMarketTable,]$file
+      table <- read.table(paste("data/", file, sep=""), header=TRUE, sep="\t")
+      table <- table[,names(table)!="comments"]
+    }, 
+    options = function() { 
+      pL <- 10
+      if (input$selectedMarketTable=="DISTILLER")
+        pL <- 4
+      list(lengthChange = FALSE, dom="tp", pageLength=pL) 
+      } 
+  )
+  
+  
+  
+  
   
   output$xSlider <- renderUI(
     {
@@ -182,7 +211,6 @@ shinyServer(function(input, output) {
   ####################
   #### TTP PLOT  #####
   ####################
-  
   output$ttpPlot <- renderPlot( {
   
     ttpPlot <- ggplot()
