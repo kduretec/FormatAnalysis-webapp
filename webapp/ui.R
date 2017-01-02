@@ -54,7 +54,6 @@ dashboardPage(
           h3("Format Markets"),
           uiOutput("chooseMarketTable"),
           DT::dataTableOutput("marketTable")
-            
         )
       ),
       tabItem(
@@ -65,7 +64,7 @@ dashboardPage(
             box(
               width = 12,
               title = "Plot Settings",
-              h4("Points"),
+              strong("Points"%>%label.help("lbl_points")),
               fluidRow(
                 column (
                   width = 6,
@@ -76,7 +75,7 @@ dashboardPage(
                   checkboxInput("smthRt", label = "Smoothed", value = FALSE)
                 )
               ),
-              h4("Bands"),
+              strong("Bands"%>%label.help("lbl_bands")),
               fluidRow(
                 column (
                   width = 6,
@@ -91,6 +90,10 @@ dashboardPage(
                           selected = 1, inline=TRUE),
              # checkboxInput("enableSlider", label="Custom X axis", value=TRUE),
              # uiOutput("xSlider"),
+              bsTooltip(id = "lbl_points", title = "Which points to diplay", 
+                       placement = "right", trigger = "hover"),
+              bsTooltip(id = "lbl_bands", title = "Which band to display", 
+                       placement = "right", trigger = "hover"),
               bsTooltip(id = "lbl_xaxis", title = "Which axis to use", 
                         placement = "right", trigger = "hover")
             ),
