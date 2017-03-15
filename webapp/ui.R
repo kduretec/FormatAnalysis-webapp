@@ -32,15 +32,20 @@ dashboardPage(
           box (
             width=12,
             h3("Format Technology Lifecycle Analysis"),
-            p(span(id="bass", "Bass Difusion Model", style="color: blue;"), span("is a well known mathematical model used to analyse and predict life-cycles of various products. 
-              It was orignially developed in 1960s with the main focus on durable goods (e.g. cars and refrigerators). Over the years its use has been widen and has 
-              been applied for modelling life-cycles of various products and services.")),
-            div(img(src="bass.png", width=200), style="text-align: center;"), br(), br(),
-            p("Format obsolescence is an important aspect and driver of many activities in digital preservation. As obsolescence is the final stage of every products 
+            p(span(id="bass", "Bass Diffusion Model", style="color: blue;"), span("is a well known mathematical model used to analyse and predict life-cycles 
+            of various products. It was originally developed in 1960s with the main focus on durable goods (e.g. cars and refrigerators). Over the years 
+            its use has been widen and has been applied for modelling life-cycles of various products and services. The model (Equation 1.) models adoption rate at a 
+            specific time (S(t)) as being dependent on three parameters : p (influence of innovators), q(influence of imitators) and m(total market potential of a product). 
+            Adoption rate is often defined as a total number of units sold in a certain time period (e.g. month, or a year). However other ways of defining adoption rate 
+            are possible.")),
+            div(div(img(src="bass.png", width=300)), div("Equation 1. Bass Diffusion Model"),style="text-align: center;"), br(), br(),
+            p("Format obsolescence is an important aspect and driver of many activities in digital preservation. As obsolescence is the final stage of every product's 
               life-cycle an important step towards gaining better understanding of format obsolescence is by getting better understanding of format technology life-cycles. This work 
-              provides initial quantative analysis of format technology life-cycles. The analysis is based on the Bass Difusion Model. We hope that this is a positive step towards 
-              generating rigorous quantative data for better understanding of format technology evolution and which risks that evolution raises towards digital preservation."),
-            div(img(src="pdf.png", width=500, height=300), style="text-align: center;")
+              provides initial quantitative analysis of format technology life-cycles. The analysis is based on the Bass Diffusion Model. We hope that this is a positive step towards 
+              generating rigorous quantitative data for better understanding of format technology evolution and which risks that evolution brings to digital preservation efforts.
+              Figure 1. Shows an example of applying the Bass Diffusion Model to PDF version 1.3. It can be seen that the model managed to identify growth and decline of the PDF v1.3 
+              file format where the format reached its peak in the year 6 after the release date.  "),
+            div(div(img(src="pdf.png", width=500, height=300)), div("Figure 1. Bass Diffusion Model applied to PDF version 1.3"), style="text-align: center;")
             ),
           bsTooltip(id = "bass", title = "Frank M. Bass, A New Product Growth for Model Consumer Durables, Management Science,15(5), 215–227. , 1969, doi:10.1287/mnsc.15.5.215", 
                     placement = "top", trigger = "hover"),
@@ -61,12 +66,15 @@ dashboardPage(
           box (
             width = 12,
             h3("Authors and Acknowledgements"),
-            div(div(img(src="duretec.jpeg", width=100, height=140), style=""), div(p("Kresimir Duretec"), width=180, style=""), width=300, 
-                style="text-align: left;"), br(),br(),
-            div(div(img(src="Christoph-Becker.jpeg", width=100, height=140), style=""), div(p("Christoph Becker"), width=180, style=""), width=300, 
-                style="text-align: left;"), br(),br(),
+            div(
+            div(div(img(src="duretec.jpeg", width=150, height=200), style=""), div(a(href="http://ifs.tuwien.ac.at/~duretec/", "Kresimir Duretec"), width=150, style=""), width=200, 
+                style="display:inline-block;margin-right:40px;"),
+            div(div(img(src="Christoph-Becker.jpeg", width=150, height=200), style=""), div(a(href="https://ischool.utoronto.ca/christoph-becker/", "Christoph Becker"), width=150, style=""), width=200, 
+                style="float:center; display:inline-block;"),
+            style="text-align:center;"
+            ), br(),br(),
             #img(src='Christoph-Becker.jpeg',width=100, height=140), br(),br(),
-            p("Part  of  this  work  was  supported  by  WWTF  through  BenchmarkDP  (ICT12-046)  and  by  NSERC  through  RGPIN-2016-06640.")
+            p("Part  of  this  work  was  supported  by  WWTF  through  BenchmarkDP  (ICT12-046)  and  by  NSERC  through  RGPIN-2016-06640.", style="text-align:center;")
           )  
         )
       ),
