@@ -13,7 +13,7 @@ label.help <- function(label,id){
 
 
 dashboardPage(
-  dashboardHeader(title = "Format Analysis"),
+  dashboardHeader(title = "Format Technology Lifecycle Analysis", titleWidth = 400),
   dashboardSidebar(
     sidebarMenu(
       id="tabs",
@@ -28,21 +28,45 @@ dashboardPage(
     tabItems(
       tabItem(
         tabName = "about",
-        box (
-          width=12,
-          h3("Format Analysis"),
-          p("This is the demonstration of applying Bass Difusion model to file formats lifecycles"),
-          h4("Authors"),
-          h4("How to cite us")
+        fluidRow( 
+          box (
+            width=12,
+            h3("Format Analysis"),
+            p("Bass Difusion model is a well known mathematical model used to analyse and predict life-cycles of various products. 
+              It was orignially developed in 1960s with the main focus on durable goods such as (e.g. cars and refrigerators). Over the years its use has been widen and has 
+              been applied for modelling the life-cycles of various products and services."),
+            p("This website demonstrates how the Bass model can be used for modelling the life-cycle of various format technologies (file formats families, format versions, 
+              or software used to create specific file formats). We see this as an important step towards a better understadning of format obsolescence, an important 
+              aspect in digital preservation which still needs better understanding based on quantative analysis."),
+            div(img(src="pdf.png", width=500, height=300), style="text-align: center;")
+            ),
+          box (
+            width = 12,
+            h3("Sources"), 
+            HTML("<a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a>")
+          ),
+          box (
+            width = 12,
+            h3("How to use the material and properly cite it ?")
+          ),
+          box (
+            width = 12,
+            h3("Authors and Acknowledgements"),
+            div(div(img(src="duretec.jpeg", width=100, height=140), style=""), div(p("Kresimir Duretec"), width=180, style=""), width=300, 
+                style="text-align: left;"), br(),br(),
+            div(div(img(src="Christoph-Becker.jpeg", width=100, height=140), style=""), div(p("Christoph Becker"), width=180, style=""), width=300, 
+                style="text-align: left;"), br(),br(),
+            #img(src='Christoph-Becker.jpeg',width=100, height=140), br(),br(),
+            p("Part  of  this  work  was  supported  by  WWTF  through  BenchmarkDP  (ICT12-046)  and  by  NSERC  through  RGPIN-2016-06640.")
+          )  
         )
-        
       ),
       tabItem(
         tabName = "dataset",
         box (
           width=12,
           h3("UK Web Archive Format Profile dataset"),
-          HTML("<p>Currently used dataset is the <a href=\"https://www.webarchive.org.uk/ukwa/visualisation/ukwa.ds.2/fmt\">UK Web Archive Format Profile dataset</a>
+          HTML("<p>Currently used dataset is the <a href=\"http://data.webarchive.org.uk/opendata/ukwa.ds.2/fmt/\">UK Web Archive Format Profile dataset</a>
                </p>"),
           div(img(src="ukwa.png", width=600), style="text-align: center;")
         )

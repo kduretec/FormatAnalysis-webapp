@@ -3,6 +3,8 @@ title:
 account: kduretec
 server: shinyapps.io
 appId: 148537
-bundleId: 666736
+bundleId: 748093
 url: https://kduretec.shinyapps.io/webapp/
-when: 1483362061.21428
+when: 1489583094.90545
+asMultiple: FALSE
+asStatic: FALSE
