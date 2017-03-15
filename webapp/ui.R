@@ -31,19 +31,28 @@ dashboardPage(
         fluidRow( 
           box (
             width=12,
-            h3("Format Analysis"),
-            p("Bass Difusion model is a well known mathematical model used to analyse and predict life-cycles of various products. 
-              It was orignially developed in 1960s with the main focus on durable goods such as (e.g. cars and refrigerators). Over the years its use has been widen and has 
-              been applied for modelling the life-cycles of various products and services."),
-            p("This website demonstrates how the Bass model can be used for modelling the life-cycle of various format technologies (file formats families, format versions, 
-              or software used to create specific file formats). We see this as an important step towards a better understadning of format obsolescence, an important 
-              aspect in digital preservation which still needs better understanding based on quantative analysis."),
+            h3("Format Technology Lifecycle Analysis"),
+            p(span(id="bass", "Bass Difusion Model", style="color: blue;"), span("is a well known mathematical model used to analyse and predict life-cycles of various products. 
+              It was orignially developed in 1960s with the main focus on durable goods (e.g. cars and refrigerators). Over the years its use has been widen and has 
+              been applied for modelling life-cycles of various products and services.")),
+            div(img(src="bass.png", width=200), style="text-align: center;"), br(), br(),
+            p("Format obsolescence is an important aspect and driver of many activities in digital preservation. As obsolescence is the final stage of every products 
+              life-cycle an important step towards gaining better understanding of format obsolescence is by getting better understanding of format technology life-cycles. This work 
+              provides initial quantative analysis of format technology life-cycles. The analysis is based on the Bass Difusion Model. We hope that this is a positive step towards 
+              generating rigorous quantative data for better understanding of format technology evolution and which risks that evolution raises towards digital preservation."),
             div(img(src="pdf.png", width=500, height=300), style="text-align: center;")
             ),
+          bsTooltip(id = "bass", title = "Frank M. Bass, A New Product Growth for Model Consumer Durables, Management Science,15(5), 215–227. , 1969, doi:10.1287/mnsc.15.5.215", 
+                    placement = "top", trigger = "hover"),
           box (
             width = 12,
             h3("Sources"), 
-            HTML("<a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a>")
+            HTML("<p> A detailed overview of the whole analysis workflow and as well detailed overview of results and discussion have been published in a separate article. 
+                 <br><a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a></p>
+                 <p> The source code of the analysis workflow (done in R language) can be found on <a href=\"https://github.com/datascience/FormatAnalysis\">Github</a></p>
+                 <p> All the data used as the input for the analysis workflow and as well generated during the analysis process has been published and can be retrieved from
+                      <a href=\"https://dx.doi.org/10.6084/m9.figshare.c.3258991\">Figshare</a></p>
+                 ")
           ),
           box (
             width = 12,
