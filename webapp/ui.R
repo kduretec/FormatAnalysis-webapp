@@ -29,6 +29,13 @@ dashboardPage(
       tabItem(
         tabName = "about",
         fluidRow( 
+          box ( 
+            width=12, 
+            h3("About this website"),
+            p("This website presents results from a project that used longitudinal web archives data to study format technology evolution and model the diffusion 
+              of formats over time using the Bass model. The website contains all generated diagrams, provides a bit of background on the data sets and workflow, 
+              and lets you play around with the figures. To make sense of these results, please refer to the article that discusses the methodology and its findings!")
+          ),
           box (
             width=12,
             h3("Format Technology Lifecycle Analysis"),
@@ -52,16 +59,32 @@ dashboardPage(
           box (
             width = 12,
             h3("Sources"), 
-            HTML("<p> A detailed overview of the whole analysis workflow and as well detailed overview of results and discussion have been published in a separate article. 
-                 <br><a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a></p>
-                 <p> The source code of the analysis workflow (done in R language) can be found on <a href=\"https://github.com/datascience/FormatAnalysis\">Github</a></p>
-                 <p> All the data used as the input for the analysis workflow and as well generated during the analysis process has been published and can be retrieved from
-                      <a href=\"https://dx.doi.org/10.6084/m9.figshare.c.3258991\">Figshare</a></p>
-                 ")
+            infoBox("Preprint Version", 
+              p("A detailed overview of the whole analysis workflow and as well detailed overview of results and discussion 
+                                          have been published in a separate article.", style="font-size:8pt;margin;margin:0;"), 
+                    icon=icon("file-pdf-o"), fill = FALSE, href = "http://hdl.handle.net/1807/75891"),
+            infoBox("Source code", p("The source code of the analysis workflow in R language",style="font-size:8pt;margin;margin:0;"), 
+                    icon=icon("github"), fill = FALSE, href="https://github.com/datascience/FormatAnalysis"),
+            infoBox("Dataset", p("All the workflow input and output data", style="font-size:8pt;margin;margin:0;"),  
+                    icon=icon("database"), fill= FALSE, href="https://dx.doi.org/10.6084/m9.figshare.c.3258991")
+          # HTML("<p> A detailed overview of the whole analysis workflow and as well detailed overview of results and discussion have been published in a separate article. 
+          #       <br><a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a></p>
+          #      <p> The source code of the analysis workflow (done in R language) can be found on <a href=\"https://github.com/datascience/FormatAnalysis\">Github</a></p>
+          #     <p> All the data used as the input for the analysis workflow and as well generated during the analysis process has been published and can be retrieved from
+          #            <a href=\"https://dx.doi.org/10.6084/m9.figshare.c.3258991\">Figshare</a></p>
+          #       ")
           ),
           box (
             width = 12,
-            h3("How to use the material and properly cite it ?")
+            h3("How to use the material and properly cite it ?"),
+            p("All the material from this site can be used free of charge for educational and scientific purposes. However you should provide a proper citation when 
+              using the material."),
+            h4("Paper"),
+            p(strong("Duretec, Kresimir; Becker, Christoph (2017):"), "Format Technology Lifecycle Analysis. Journal of the Association for Information Science and Technology, 
+              doi:10.1002/asi.23881 (TO BE PUBLISHED)", a(href="http://hdl.handle.net/1807/75891", "preprint version")),
+            h4("Dataset"),
+            p(strong("Duretec, Kresimir; Becker, Christoph (2016):"), "BenchmarkDP - Format technology lifecycle analysis based on the UK 
+              Web Archive Format Profile dataset. doi:10.6084/m9.figshare.c.3258991")
           ),
           box (
             width = 12,
