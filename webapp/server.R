@@ -1,7 +1,7 @@
 library(shiny)
 library(shinyjs)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 # Define server logic required to draw a histogram
 
 formatData <- readRDS("data/allExperimentsCombined.rds")
