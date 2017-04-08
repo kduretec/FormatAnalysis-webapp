@@ -3,8 +3,9 @@ title:
 account: kduretec
 server: shinyapps.io
 appId: 148537
-bundleId: 765835
+bundleId: 781694
 url: https://kduretec.shinyapps.io/webapp/
-when: 1490649819.34714
+when: 1491650203.78761
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: data/.DS_Store

@@ -43,13 +43,13 @@ dashboardPage(
             p(span(id="bass", "Bass Diffusion Model", style="color: blue;"), span("is a well known mathematical model used to analyse and predict the diffusion 
             life-cycle of various products. It was originally developed in 1960s with the main focus on durable goods (e.g. cars and refrigerators). Over the 
             years its use has expanded, and it has been applied for modelling life-cycles of various products and services. The model (Equation 1.) expresses 
-            that adoption rate at a specific time (S(t)) is dependent on three parameters : p (influence of innovators), q (influence of imitators) and m (total 
+            that adoption rate at a specific time (S(t)) is dependent on three parameters : p (coefficient of external influence), q (coefficient of internal influence) and m (total 
             market potential of a product). Adoption rate is often defined as a total number of units sold in a certain time period (e.g. month, or a year). 
             However, other ways of defining adoption rate are possible.")),
             div(div(img(src="bass.png", width=300)), div("Equation 1. Bass Diffusion Model"),style="text-align: center;"), br(), br(),
             p("The article describes how we have mapped these concepts to file format technologies and used the Bass model to describe how the use of formats 
                evolves on the web. Here’s one example discussed in the article - PDF 1.3 on the UK web."),
-            div(div(img(src="pdf.png", width=500, height=300)), div("Figure 1. Bass Diffusion Model applied to PDF version 1.3"), style="text-align: center;")
+            div(div(img(src="pdf.png", width=643, height=300)), div("Figure 1. Bass Diffusion Model applied to PDF version 1.3"), style="text-align: center;")
             ),
           bsTooltip(id = "bass", title = "Frank M. Bass, A New Product Growth for Model Consumer Durables, Management Science,15(5), 215–227. , 1969, doi:10.1287/mnsc.15.5.215", 
                     placement = "top", trigger = "hover"),
@@ -153,11 +153,11 @@ dashboardPage(
                           selected = 1, inline=TRUE),
              # checkboxInput("enableSlider", label="Custom X axis", value=TRUE),
              # uiOutput("xSlider"),
-              bsTooltip(id = "lbl_points", title = "Which points to diplay", 
+              bsTooltip(id = "lbl_points", title = "Which points to diplay ( smoothed is calculated as a 3 years average)", 
                        placement = "right", trigger = "hover"),
-              bsTooltip(id = "lbl_bands", title = "Which band to display", 
+              bsTooltip(id = "lbl_bands", title = "Which band from non-linear regression to display", 
                        placement = "right", trigger = "hover"),
-              bsTooltip(id = "lbl_xaxis", title = "Which axis to use", 
+              bsTooltip(id = "lbl_xaxis", title = "Which value to use as the X axis", 
                         placement = "right", trigger = "hover")
             ),
             box(

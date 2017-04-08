@@ -77,13 +77,16 @@ shinyServer(function(input, output) {
       file <- marketFiles[marketFiles$market==input$selectedMarketTable,]$file
       table <- read.table(paste("data/", file, sep=""), header=TRUE, sep="\t")
       table <- table[,names(table)!="comments"]
+      colnames(table)[which(names(table) == "release.year")] <- "release year"
+      table
     }, 
     options = function() { 
       pL <- 10
       if (input$selectedMarketTable=="DISTILLER")
         pL <- 4
       list(lengthChange = FALSE, dom="tp", pageLength=pL) 
-      } 
+      },
+    rownames = FALSE
   )
   
   
@@ -137,9 +140,16 @@ shinyServer(function(input, output) {
   output$mainTable <- DT::renderDataTable(
     {
       tmpModelsTab <- formatData[formatData$ID %in% input$selectedElements,]
-      tmpModelsTab[,names(tmpModelsTab) %in% c("ID", "name", "release.year", "p", "q", "m", "qualityFit")]
+      tmpModelsTab <- tmpModelsTab[,names(tmpModelsTab) %in% c("ID", "name", "release.year", "p", "q", "m", "qualityFit")]
+      tmpModelsTab$p <- round(tmpModelsTab$p, 3)
+      tmpModelsTab$q <- round(tmpModelsTab$q, 3)
+      tmpModelsTab$m <- round(tmpModelsTab$m, 3)
+      colnames(tmpModelsTab)[which(names(tmpModelsTab) == "release.year")] <- "release year"
+      colnames(tmpModelsTab)[which(names(tmpModelsTab) == "qualityFit")] <- "quality of fit"
+      tmpModelsTab
     },
-    options = list(lengthChange = FALSE, dom="tp")
+    options = list(lengthChange = FALSE, dom="tp"),
+    rownames = FALSE
   )
 
   ####################
@@ -186,7 +196,8 @@ shinyServer(function(input, output) {
             legend.title=element_blank(),
             legend.key=element_blank(),
             legend.text=element_text(size=12)) +
-      guides(fill=guide_legend(nrow=2, ncol=3, byrow=TRUE))
+      guides(color=guide_legend(ncol=3, byrow = FALSE),
+             fill=guide_legend(ncol=3, byrow = FALSE))
     
     return (mPlot)
   }
@@ -240,6 +251,7 @@ shinyServer(function(input, output) {
     ttpPlot <- ttpPlot + geom_point(data=experimentData[experimentData$TTP>0 & experimentData$type %in% input$selectedType & 
                                                           experimentData$qualityFit %in% input$selectedQuality,], 
                                     aes(x=release.year, y=TTP, color=type, size=peak)) +
+      labs(x="release year", y="time to peak") +
       theme_bw() +
       theme(legend.position="bottom",
             legend.title=element_blank(),
