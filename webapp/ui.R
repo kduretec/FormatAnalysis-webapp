@@ -40,7 +40,7 @@ dashboardPage(
           box (
             width=12,
             h3("Format Technology Lifecycle Analysis"),
-            p(span(id="bass", "Bass Diffusion Model", style="color: blue;"), span("is a well known mathematical model used to analyse and predict the diffusion 
+            p(span("The"), a(href="http://doi.org/10.1287/mnsc.15.5.215", "Bass Diffusion Model"), span("is a well known mathematical model used to analyse and predict the diffusion 
             life-cycle of various products. It was originally developed in 1960s with the main focus on durable goods (e.g. cars and refrigerators). Over the 
             years its use has expanded, and it has been applied for modelling life-cycles of various products and services. The model (Equation 1.) expresses 
             that adoption rate at a specific time (S(t)) is dependent on three parameters : p (coefficient of external influence), q (coefficient of internal influence) and m (total 
@@ -51,8 +51,6 @@ dashboardPage(
                evolves on the web. Here’s one example discussed in the article - PDF 1.3 on the UK web."),
             div(div(img(src="pdf.png", width=643, height=300)), div("Figure 1. Bass Diffusion Model applied to PDF version 1.3"), style="text-align: center;")
             ),
-          bsTooltip(id = "bass", title = "Frank M. Bass, A New Product Growth for Model Consumer Durables, Management Science,15(5), 215–227. , 1969, doi:10.1287/mnsc.15.5.215", 
-                    placement = "top", trigger = "hover"),
           box (
             width = 12,
             h3("Sources"), 
@@ -64,7 +62,7 @@ dashboardPage(
                     icon=icon("github"), fill = FALSE, href="https://github.com/datascience/FormatAnalysis"),
             infoBox("Dataset", p("All the data used as the input for the analysis workflow and as well generated during the analysis 
                                  process has been published and can be retrieved from Figshare.", style="font-size:8pt;margin;margin:0;"),  
-                    icon=icon("database"), fill= FALSE, href="https://dx.doi.org/10.6084/m9.figshare.c.3258991")
+                    icon=icon("database"), fill= FALSE, href="https://doi.org/10.6084/m9.figshare.c.3258991")
           # HTML("<p> A detailed overview of the whole analysis workflow and as well detailed overview of results and discussion have been published in a separate article. 
           #       <br><a href=\"http://hdl.handle.net/1807/75891\">Preprint version of the article</a></p>
           #      <p> The source code of the analysis workflow (done in R language) can be found on <a href=\"https://github.com/datascience/FormatAnalysis\">Github</a></p>
@@ -74,16 +72,15 @@ dashboardPage(
           ),
           box (
             width = 12,
-            h3("How to use the material and properly cite it ?"),
+            h3("How to use and cite the material"),
             p(span("The material on this website is available under a Creative Commons license:"), 
-               a(href="https://creativecommons.org/licenses/by-nc-sa/3.0/","Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0)"), span(". You can use it free of charge for educational and research purposes. 
-            Please cite the following paper in your work:")),
-            h4("Paper"),
+               a(href="https://creativecommons.org/licenses/by-nc-sa/3.0/","Attribution-NonCommercial-ShareAlike 3.0 (CC BY-NC-SA 3.0)"), span("Please cite the following paper 
+                                                                                                                                               in your work:")),
             p(strong("Duretec, Kresimir; Becker, Christoph (2017):"), "Format Technology Lifecycle Analysis. Journal of the Association for Information Science and Technology, 
               doi:10.1002/asi.23881 (accepted for publication), Preprint: ", a(href="http://hdl.handle.net/1807/75891", "http://hdl.handle.net/1807/75891")),
-            h4("Dataset"),
-            p(strong("Duretec, Kresimir; Becker, Christoph (2016):"), "BenchmarkDP - Format technology lifecycle analysis based on the UK 
-              Web Archive Format Profile dataset. doi:10.6084/m9.figshare.c.3258991")
+            p("The dataset behind this paper is what you can explore on this website. It is available and citable here: "),
+            p(strong("Duretec, Kresimir; Becker, Christoph (2016):"), span("BenchmarkDP - Format technology lifecycle analysis based on the UK 
+              Web Archive Format Profile dataset."), a(href="https://doi.org/10.6084/m9.figshare.c.3258991", "doi:10.6084/m9.figshare.c.3258991"))
           ),
           box (
             width = 12,
@@ -105,9 +102,15 @@ dashboardPage(
         box (
           width=12,
           h3("UK Web Archive Format Profile dataset"),
-          HTML("<p>Currently used dataset is the <a href=\"http://data.webarchive.org.uk/opendata/ukwa.ds.2/fmt/\">UK Web Archive Format Profile dataset</a>
+          HTML("<p>The currently used dataset is the <a href=\"http://data.webarchive.org.uk/opendata/ukwa.ds.2/fmt/\">UK Web Archive Format Profile dataset</a>
                </p>"),
           div(img(src="ukwa.png", width=600), style="text-align: center;")
+        ),
+        box (
+          width = 12,
+          p(span("This page presents results from a project that used longitudinal web archives data to study format technology evolution and model the diffusion of formats over 
+                 time using the Bass model. You can explore all generated diagrams and models. To make sense of these, please"), a(href="http://hdl.handle.net/1807/75891", "refer to the 
+                                                                                                                                   article"), span(" that discusses the methodology and its findings!"))
         )
       ),
       tabItem(
@@ -117,10 +120,17 @@ dashboardPage(
           h3("Format Markets"),
           uiOutput("chooseMarketTable"),
           DT::dataTableOutput("marketTable")
+        ),
+        box (
+          width = 12,
+          p(span("This page presents results from a project that used longitudinal web archives data to study format technology evolution and model the diffusion of formats over 
+                 time using the Bass model. You can explore all generated diagrams and models. To make sense of these, please"), a(href="http://hdl.handle.net/1807/75891", "refer to the 
+                                                                                                                                   article"), span(" that discusses the methodology and its findings!"))
         )
       ),
       tabItem(
         tabName = "models",
+        
         fluidRow(
           column(
             width = 3,
@@ -183,7 +193,13 @@ dashboardPage(
             )
             
           )
-        )
+        ),
+        box (
+          width = 12,
+          p(span("This page presents results from a project that used longitudinal web archives data to study format technology evolution and model the diffusion of formats over 
+                 time using the Bass model. You can explore all generated diagrams and models. To make sense of these, please"), a(href="http://hdl.handle.net/1807/75891", "refer to the 
+                                                                                                                                   article"), span(" that discusses the methodology and its findings!"))
+          )
       ),
       tabItem(
         tabName = "parameters",
@@ -214,6 +230,12 @@ dashboardPage(
             )
             
           )
+        ),
+        box (
+          width = 12,
+          p(span("This page presents results from a project that used longitudinal web archives data to study format technology evolution and model the diffusion of formats over 
+                 time using the Bass model. You can explore all generated diagrams and models. To make sense of these, please"), a(href="http://hdl.handle.net/1807/75891", "refer to the 
+                                                                                                                                   article"), span(" that discusses the methodology and its findings!"))
         )
       )
     )

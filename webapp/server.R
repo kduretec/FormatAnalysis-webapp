@@ -5,8 +5,10 @@ library(ggplot2)
 # Define server logic required to draw a histogram
 
 formatData <- readRDS("data/allExperimentsCombined.rds")
-
+formatData$qualityFit <- tolower(formatData$qualityFit)
 experimentData <- read.table("data/allExperiments.tsv", header=TRUE, sep="\t")
+experimentData$type <- tolower(experimentData$type)
+experimentData$qualityFit <- tolower(experimentData$qualityFit)
 qualityFit <- unique(experimentData$qualityFit)
 type <- unique(experimentData$type)
 marketFiles <- read.table("data/markets.tsv", header=TRUE, sep="\t")
@@ -69,7 +71,7 @@ shinyServer(function(input, output) {
   ####################
   output$chooseMarketTable <- renderUI(
     {
-      selectInput("selectedMarketTable", "Choose market", as.list(marketFiles$market))
+      selectInput("selectedMarketTable", "Choose a market", as.list(marketFiles$market))
     }
   )
   output$marketTable <- DT::renderDataTable( 
@@ -113,7 +115,7 @@ shinyServer(function(input, output) {
   )
   
   output$chooseMarket <- renderUI({
-    selectInput("selectedMarket", "Choose market", as.list(markets))
+    selectInput("selectedMarket", "Choose a market", as.list(markets))
   })
   
   output$chooseElement <- renderUI({
@@ -210,7 +212,7 @@ shinyServer(function(input, output) {
   ####################
   output$qualityFit <- renderUI (
     {
-      checkboxGroupInput("selectedQuality", "Quality Fit", choices = qualityFit, 
+      checkboxGroupInput("selectedQuality", "Quality of Fit", choices = qualityFit, 
                          selected = qualityFit)
     }
   )
